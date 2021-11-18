@@ -51,7 +51,7 @@ func New(zlog *zap.SugaredLogger, debug ...bool) Logger {
 	return Logger{
 		Zlog:          zlog,
 		Loglevel:      logger.Warn,
-		SlowThreshold: 1 * time.Second,
+		SlowThreshold: 3 * time.Second,
 	}
 }
 
