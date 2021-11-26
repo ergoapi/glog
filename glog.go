@@ -92,7 +92,7 @@ func (l Logger) Trace(ctx context.Context, begin time.Time, fc func() (string, i
 		case err != nil && l.Loglevel >= logger.Error:
 			sql, rows := fc()
 			if rows == -1 || rows == 0 || err == gorm.ErrRecordNotFound {
-				go file.Writefile(fmt.Sprintf("%v.dbnotfound.txt", ztime.GetToday()), sql)
+				go file.WritefileWithLine(fmt.Sprintf("%v.dbnotfound.txt", ztime.GetToday()), sql)
 				l.Zlog.Infof(traceErrStr, utils.FileWithLineNum(), err, float64(elapsed.Nanoseconds())/1e6, "-", sql)
 			} else {
 				l.Zlog.Errorf(traceErrStr, utils.FileWithLineNum(), err, float64(elapsed.Nanoseconds())/1e6, rows, sql)
@@ -100,7 +100,7 @@ func (l Logger) Trace(ctx context.Context, begin time.Time, fc func() (string, i
 		case l.SlowThreshold != 0 && elapsed > l.SlowThreshold && l.Loglevel >= logger.Warn:
 			sql, rows := fc()
 			slowLog := fmt.Sprintf("SLOW SQL >= %v", l.SlowThreshold)
-			go file.Writefile(fmt.Sprintf("%v.slowsql.txt", ztime.GetToday()), sql+" "+slowLog)
+			go file.WritefileWithLine(fmt.Sprintf("%v.slowsql.txt", ztime.GetToday()), sql+" "+slowLog)
 			if rows == -1 {
 				l.Zlog.Warnf(traceWarnStr, utils.FileWithLineNum(), slowLog, float64(elapsed.Nanoseconds())/1e6, "-", sql)
 			} else {
