@@ -5,7 +5,7 @@ go 1.17
 require (
 	github.com/ergoapi/util v0.2.2
 	go.uber.org/zap v1.21.0
-	gorm.io/gorm v1.23.2
+	gorm.io/gorm v1.23.3
 )
 
 require (
